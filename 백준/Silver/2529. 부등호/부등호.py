@@ -1,56 +1,33 @@
 n = int(input())
-moves = list(input().split())
-lst = [i for i in range(10)]
-visited = [False for _ in range(len(lst))]
-max_tot = -1
-min_tot = 100
-ans = []
+brackets = list(map(str,input().split()))
+visited= [False for _ in range(10)]
+min_ans=''
+max_ans=''
+def check(i,j,h):
+    if h=='<':
+        return i<j
+    else:
+        return i>j
 
-def dfs(tmp):
-    global max_tot, min_tot, ans
-    if len(tmp) == n + 1:
-        flag = False
-        left = tmp[0]
-        for i in range(1, n + 1):
-            bracket = moves[i - 1]
-            right = tmp[i]
-            if bracket == '<':
-                if left < right:
-                    left = right
-                else:
-                    flag = True
-                    break
-            else:
-                if left > right:
-                    left = right
-                else:
-                    flag = True
-                    break
-        if not flag:
-            val = ''.join(map(str, tmp))
-            ans.append(int(val))
-            return
+def dfs(idx,hola):
+    global min_ans,max_ans
+    if idx==n+1:
+        if len(min_ans)==0:
+            # since we are iterating from 0 to 9 sequentially the first string that meets the condition is garanteed the smallest
+            min_ans=hola
         else:
-            return
+            max_ans=hola
+        return
 
-    for i in range(len(lst)):
+    for i in range(10):
         if not visited[i]:
-            tmp.append(lst[i])
-            visited[i] = True
-            dfs(tmp)
-            tmp.pop()
-            visited[i] = False
-
-dfs([])
-ans.sort()
-changed=''
-val=ans[0]
-if len(str(val))<n+1:
-    changed = '0'*(n+1-len(str(val))) + str(val)
-else:
-    changed = ans[0]
-
-
-print(ans[-1])
-# print(ans[0])
-print(changed)
+            if idx==0 or check(hola[-1],str(i),brackets[idx-1]):
+                # if i do hola+=str(i), I need to slice it for backtracking or else it will accumulate
+                hola+=str(i)
+                visited[i]=True
+                dfs(idx+1,hola)
+                hola=hola[:-1]
+                visited[i]=False
+dfs(0,'')
+print(max_ans)
+print(min_ans)
