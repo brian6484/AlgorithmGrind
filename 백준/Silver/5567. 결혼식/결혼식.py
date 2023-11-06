@@ -1,5 +1,6 @@
 from collections import defaultdict
-
+import sys
+input = sys.stdin.readline
 n = int(input())
 m = int(input())
 graph = defaultdict(list)
