@@ -19,6 +19,8 @@ def dijkstra(node,distance):
     heapq.heappush(heap,(0,node))
     while heap:
         cur_cost,cur_node = heapq.heappop(heap)
+        if cur_cost>distance[cur_node]:
+            continue
         for hola in graph[cur_node]:
             next_node,next_cost = hola
             if cur_cost+next_cost <distance[next_node]:
