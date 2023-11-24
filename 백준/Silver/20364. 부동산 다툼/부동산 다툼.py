@@ -1,5 +1,3 @@
-
-from collections import defaultdict
 import sys
 input=sys.stdin.readline
 
@@ -9,7 +7,7 @@ lst = []
 for _ in range(m):
     lst.append(int(input()))
 
-dic = defaultdict(list)
+dic = {}
 
 for num in lst:
     result=0
@@ -18,5 +16,5 @@ for num in lst:
         if num in dic.keys():
             result=num
         num//=2
-    dic[tmp].append(1)
+    dic[tmp]=1
     print(result)
