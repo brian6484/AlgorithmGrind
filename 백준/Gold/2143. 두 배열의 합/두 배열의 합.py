@@ -1,7 +1,7 @@
-from collections import defaultdict
 import sys
-input=sys.stdin.readline
+from collections import defaultdict
 
+input = sys.stdin.readline
 t = int(input())
 n = int(input())
 a = list(map(int, input().split()))
@@ -12,13 +12,15 @@ ans = 0
 tmp = defaultdict(int)
 
 for i in range(n):
+    total_sum = 0
     for j in range(i, n):
-        val = sum(a[i:j+1])
-        tmp[val] += 1
+        total_sum += a[j]
+        tmp[total_sum] += 1
 
 for i in range(m):
+    total_sum = 0
     for j in range(i, m):
-        val = sum(b[i:j+1])
-        ans += tmp[t - val]
+        total_sum += b[j]
+        ans += tmp[t - total_sum]
 
 print(ans)
