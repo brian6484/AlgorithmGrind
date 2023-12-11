@@ -1,20 +1,16 @@
+from collections import defaultdict
 import heapq
-import collections
 import sys
-sys.setrecursionlimit(10**6)
-input = sys.stdin.readline
+input=sys.stdin.readline
 
-n, m = map(int,input().split()) # 노드 수, 간선 수
-graph = collections.defaultdict(list) # 빈 그래프 생성
-visited = [0] * (n+1) # 노드의 방문 정보 초기화
+V, E = map(int, input().split())
+graph = defaultdict(list)
 
-# 무방향 그래프 생성
-for i in range(m): # 간성 정보 입력 받기
-    u, v, weight = map(int,input().split())
-    graph[u].append([weight, u, v])
-    graph[v].append([weight, v, u])
-
-
+for _ in range(E):
+    a, b, weight = map(int, input().split())
+    graph[a].append((weight, a, b))
+    graph[b].append((weight, b, a))
+visited = [0] * (V+1) # 노드의 방문 정보 초기화
 # 프림 알고리즘
 def prim(graph, start_node):
     visited[start_node] = 1 # 방문 갱신
