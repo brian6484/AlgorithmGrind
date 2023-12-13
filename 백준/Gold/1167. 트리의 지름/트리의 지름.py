@@ -14,11 +14,11 @@ graph = defaultdict(list)
 for _ in range(n):
     lst = list(map(int, input().split()))
     a = lst[0]
-    lst = lst[1:-1]
-    for i in range(len(lst)//2):
-        b, c = lst[i*2], lst[i*2+1]
-        graph[a].append([b, c])
-        graph[b].append([a, c])
+    for i in range(1,len(lst),2):
+        if lst[i]!=-1:
+            b, c = lst[i], lst[i+1]
+            graph[a].append([b, c])
+            graph[b].append([a, c])
 
 distance = [-1] * (n+1)
 distance[1] = 0
