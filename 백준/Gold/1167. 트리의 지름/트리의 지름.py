@@ -18,7 +18,7 @@ for _ in range(n):
         if lst[i]!=-1:
             b, c = lst[i], lst[i+1]
             graph[a].append([b, c])
-            graph[b].append([a, c])
+
 
 distance = [-1] * (n+1)
 distance[1] = 0
