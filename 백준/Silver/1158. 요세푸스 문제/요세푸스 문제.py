@@ -10,4 +10,4 @@ for _ in range(n):
     if num>=len(lst):
         num%=len(lst)
     ans.append(str(lst.pop(num)))
-print("<",", ".join(ans)[:],">", sep='')
+print("<",", ".join(ans),">", sep='')
