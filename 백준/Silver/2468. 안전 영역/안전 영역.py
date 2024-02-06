@@ -3,20 +3,14 @@ input = sys.stdin.readline
 sys.setrecursionlimit(1000000000)
 n = int(input())
 board = []
-minVal =int(10e8)
-maxVal = 0
 
 for _ in range(n):
     lst = list(map(int, input().split()))
-    minVal = min(minVal, min(lst))
-    maxVal = max(maxVal, max(lst))
     board.append(lst)
     
 moves = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-ans = 0
-if minVal==maxVal:
-    print(1)
-    exit()
+ans = 1
+maxVal = max(max(row) for row in board)
 
 def dfs(level, graph, i, j):
     for move in moves:
@@ -26,7 +20,7 @@ def dfs(level, graph, i, j):
                 graph[next_row][next_col] = 0
                 dfs(level, graph, next_row, next_col)
 
-for a in range(minVal, maxVal + 1):
+for a in range(maxVal):
     tmp = copy.deepcopy(board)
     count = 0
     for i in range(n):
