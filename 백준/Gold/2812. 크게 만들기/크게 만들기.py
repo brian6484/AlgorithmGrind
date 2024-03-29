@@ -10,12 +10,9 @@ for i in range(1, n):
         k -= 1
     stack.append(num)
 
-result = ""
-while stack:
-    result += stack.pop()
+while k:
+    k-=1
+    stack.pop()
 
-result=result[::-1]
-if k:
-    result = result[:-k]
-
-print(result)
+for i in stack:
+    print(i, end='')
