@@ -1,5 +1,8 @@
 import heapq
 from collections import defaultdict
+import sys
+
+input = sys.stdin.readline
 
 N, M = map(int, input().split())
 infinity = float('inf')
