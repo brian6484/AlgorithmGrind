@@ -1,28 +1,31 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 import sys
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(300000)
 
-def dfs(node, depth):
-    if node == b:
-        print(depth)
-        exit(0)
-    for child in graph[node]:
-        if not visited[child]:
-            visited[child] = True
-            dfs(child, depth + 1)
-
-n = int(input())
-a, b = map(int, input().split())
-m = int(input())
+N = int(input())
+start,end = map(int, input().split())
+M = int(input())
 graph = defaultdict(list)
+ans =[]
+visited =[False for _ in range(N+1)]
 
-for _ in range(m):
-    c, d = map(int, input().split())
-    graph[c].append(d)
-    graph[d].append(c)
+for _ in range(M):
+    x,y = map(int,input().split())
+    graph[x].append(y)
+    graph[y].append(x)
 
-visited = [False] * (n + 1)
-visited[a] = True
+def dfs(hola,count):
+    if hola==end:
+        ans.append(count)
+        return
+    for next in graph[hola]:
+        if not visited[next]:
+            visited[next]=True
+            dfs(next,count+1)
 
-dfs(a, 0)
-print(-1)
+visited[start]=True
+dfs(start,0)
+if ans:
+    print(ans[0])
+else:
+    print(-1)
