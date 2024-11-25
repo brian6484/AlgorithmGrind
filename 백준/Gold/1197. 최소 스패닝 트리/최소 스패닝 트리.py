@@ -1,35 +1,33 @@
-from collections import defaultdict
-import heapq
 import sys
-input=sys.stdin.readline
+input = sys.stdin.readline
+sys.setrecursionlimit(300000)
+n,m = map(int,input().split())
+parent = [i for i in range(n+1)]
+edges=[]
 
-V, E = map(int, input().split())
-graph = defaultdict(list)
+for _ in range(m):
+    a,b,cost = map(int,input().split())
+    edges.append((cost,a,b))
 
-for _ in range(E):
-    a, b, weight = map(int, input().split())
-    graph[a].append((weight, a, b))
-    graph[b].append((weight, b, a))
-visited = [0] * (V+1) # 노드의 방문 정보 초기화
-# 프림 알고리즘
-def prim(graph, start_node):
-    visited[start_node] = 1 # 방문 갱신
-    candidate = graph[start_node] # 인접 간선 추출
-    heapq.heapify(candidate) # 우선순위 큐 생성
-    mst = [] # mst
-    total_weight = 0 # 전체 가중치
+edges.sort()
 
-    while candidate:
-        weight, u, v = heapq.heappop(candidate) # 가중치가 가장 적은 간선 추출
-        if visited[v] == 0: # 방문하지 않았다면
-            visited[v] = 1 # 방문 갱신
-            mst.append((u,v)) # mst 삽입
-            total_weight += weight # 전체 가중치 갱신
+def find_parent(node):
+    global parent
+    if parent[node]!=node:
+        parent[node]=find_parent(parent[node])
+    return parent[node]
 
-            for edge in graph[v]: # 다음 인접 간선 탐색
-                if visited[edge[2]] == 0: # 방문한 노드가 아니라면, (순환 방지)
-                    heapq.heappush(candidate, edge) # 우선순위 큐에 edge 삽입
+def union(node1,node2):
+    par1,par2 = find_parent(node1), find_parent(node2)
+    if par1<par2:
+        parent[par2]=par1
+    else:
+        parent[par1]=par2
 
-    return total_weight
-
-print(prim(graph,1))
+total=0
+for edge in edges:
+    cost,a,b = edge
+    if find_parent(a)!=find_parent(b):
+        union(a,b)
+        total+=cost
+print(total)
